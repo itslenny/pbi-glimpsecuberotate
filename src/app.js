@@ -34,10 +34,18 @@ main.on('click', 'down', function(e) {
   console.log("DOWN BUTTON");
 });
 
-var myGlimpse = new Glimpse('watch',glimpseCode);
+var glimpseOptions = {
+  persistEvents: {
+    "update" : ["x", "y", "z"]
+  }
+};
+
+var myGlimpse = new Glimpse('watch', glimpseCode, glimpseOptions);
 
 myGlimpse.connect(function(err, socket) {
   Accel.on('data', function(e) {
-    socket.emit('update',e)
+    if(e.accel) {
+      socket.emit('update',e.accel)      
+    }
   });
 });

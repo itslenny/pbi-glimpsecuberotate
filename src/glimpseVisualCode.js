@@ -67,9 +67,9 @@ module.exports = `
   }
 
   Glimpse.prototype.update = function(data) {
-    var x = this.scales.accel(data.accel.x);
-    var y = this.scales.accel(data.accel.y);
-    var z = this.scales.accel(data.accel.z);
+    var x = this.scales.accel(data.x);
+    var y = this.scales.accel(data.y);
+    var z = this.scales.accel(data.z);
     var miu = 0.001
     var sign = z > 0 ? 1 : -1;
     //var roll = Math.atan2(y, z) * 180 / Math.PI;

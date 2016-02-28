@@ -1,6 +1,8 @@
 var defaults = {
     server: 'https://glimpseserver.herokuapp.com',
-    port:'443'
+    port:'443',
+    /** persistEvents: { "EventName" : ["Property", "Names", "To", "Persist"] } */
+    persistEvents: {}
 }
 
 var Glimpse = function(id, glimpseCode, options) {
@@ -17,12 +19,14 @@ var Glimpse = function(id, glimpseCode, options) {
 Glimpse.prototype.connect = function(callback) {
     var glimpseCode = this.glimpseCode;
     var id = this.id;
+    var persistEvents = this.options.persistEvents;
     var socket = this.socket = require('./socket.js')(this.options.server + ':' + this.options.port);
 
     socket.on('connect', function(){
         socket.emit('glimpse:create', {
             id: id,
-            impl: glimpseCode
+            impl: glimpseCode,
+            persistEvents: persistEvents
         });
         
         if(callback) {
